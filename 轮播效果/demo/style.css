@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.content-box {
+  overflow: hidden;
+  position: relative;
+  width: 500px;
+  height: 300px;
+  border: 10px solid #ccc;
+  margin: 100px auto;
+}
+.content-box .slider-wrap {
+  width: 1000000px;
+  /*足够宽，能装下所有的图片的横向排列*/
+}
+.content-box .slider-wrap .slider {
+  width: 500px;
+  height: 300px;
+  color: #fff;
+  text-align: center;
+  line-height: 300px;
+  font-size: 30px;
+  float: left;
+}
+.content-box .slider-wrap .sty1 {
+  background: #66bb6a;
+}
+.content-box .slider-wrap .sty2 {
+  background: #ffd54f;
+}
+.content-box .slider-wrap .sty3 {
+  background: #4fc3f7;
+}
+.content-box .slider-wrap .sty4 {
+  background: pink;
+}
+.content-box .slider-wrap .sty5 {
+  background: #FF9800;
+}
+.content-box .btn-wrap .prev,
+.content-box .btn-wrap .next {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  font-size: 32px;
+  cursor: pointer;
+}
+.content-box .btn-wrap .next {
+  right: 0;
+}
+.content-box .nav-wrap {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+.content-box .nav-wrap li {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  margin-right: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+.content-box .nav-wrap .active {
+  background: #fff;
+}

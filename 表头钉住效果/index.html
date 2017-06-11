@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery.js"></script>
+    <style rel="stylesheet" type="text/css">
+        ul,
+        li,
+        a {
+            list-style: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table-wrap {
+            width: 700px;
+            margin: 200px auto 100px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .table-l {
+            float: left;
+            width: 200px;
+            background: #eee;
+        }
+
+        .table-r {
+            float: right;
+            width: 500px;
+            position: relative;
+        }
+
+        .table-r ul {
+            border: 1px solid #ddd;
+        }
+
+        h3 {
+            background: rgba(173, 216, 230, 0.6);
+            width: 500px;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        li {
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+
+        .scroll-fixed {
+            position: fixed;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="table-wrap">
+        <div class="table-l js-tab-th">
+            <ul>
+
+            </ul>
+        </div>
+        <div class="table-r">
+            <h3 class="js-tab-th">表头</h3>
+            <ul>
+
+            </ul>
+        </div>
+        <div class="footer" style="height: 500px; width: 500px; clear:both">
+            footer
+        </div>
+    </div>
+</body>
+<script>
+    for (var i = 0; i < 10; i++) {
+        var dom = "<li>标题" + (i + 1) + "</li>";
+        $(".table-l ul").append(dom);
+    };
+    for (var i = 0; i < 40; i++) {
+        var dom = "<li>内容" + (i + 1) + "</li>";
+        $(".table-r ul").append(dom);
+    };
+    var thTop = $(".js-tab-th").offset().top;
+    var tableH = $(".table-r ul").height();
+    var t1H = $(".js-tab-th").eq(0).height();
+    var tableScrollH = thTop + tableH - t1H; //可滚动区域 减去右边导航的高度，右边导航到临界值之后要跟着上移
+
+    $(window).scroll(tableFixed);
+    function tableFixed() {
+        var _top = $(window).scrollTop();
+        if (_top < thTop) {
+            $(".js-tab-th").removeClass("scroll-fixed");
+        } else {
+            $(".js-tab-th").addClass("scroll-fixed");
+            console.log("_top:"+_top);
+            console.log("tableScrollH:"+tableScrollH);
+            if (_top > tableScrollH) {
+                $(".js-tab-th").eq(0).css({ top: tableScrollH - _top });
+            } else {
+                $(".js-tab-th").eq(0).css({ top: 0 });
+            }
+
+        }
+    }
+
+</script>
+
+</html>
