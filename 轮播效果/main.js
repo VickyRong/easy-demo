@@ -76,7 +76,7 @@ $(function () {
                 slider.clickItem(index);
             });
             $(".nav-wrap ul li").eq(0).click();
-            // slider.interval();
+            slider.interval();
         }
     }
     slider.init();
