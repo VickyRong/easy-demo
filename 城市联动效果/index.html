@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>城市联动</title>
+    <script src="./jquery.js"></script>
+    <script src="./city-data.js"></script>
+    <style>
+        .main-content {
+            width: 800px;
+            margin: 100px auto;
+        }
+
+        select {
+            width: 130px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+        <select name="" id="province">
+            <option value="">省</option>
+        </select>
+        <select name="" id="city">
+            <option value="">市</option>
+        </select>
+        <select name="" id="area">
+            <option value="">区</option>
+        </select>
+    </div>
+    <script>
+        $(function () {
+            //province,city,area从city-data.js中获取
+            //方法一：
+            var provinceOptions = province;
+            var cityOptions = getCity(provinceOptions[0].code)
+            var areaOptions = getArea(cityOptions[0].code)
+
+            // 填充options
+            appendOptionsDom('#province', provinceOptions)
+            appendOptionsDom('#city', cityOptions)
+            appendOptionsDom('#area', areaOptions)
+
+            // 绑定change事件
+            $("#province").on("change", onProvinceChange)
+            $('#city').on('change', onCityChange)
+
+            // 事件处理函数
+            function onProvinceChange(e) {
+                var provinceCode = $(e.target).find("option:selected").data('code');
+                $("#city").empty();
+                $('#area').empty();
+                var cityOptions = getCity(provinceCode)
+                var areaOptions = getArea(cityOptions[0].code)
+                appendOptionsDom('#city', cityOptions)
+                appendOptionsDom('#area', areaOptions)
+            }
+
+            function onCityChange(e) {
+                var cityCode = $(e.target).find("option:selected").data('code')
+                $('#area').empty();
+                var areaOptions = getArea(cityCode)
+                appendOptionsDom('#area', areaOptions)
+            }
+            function getCity(provinceCode) {
+                return city.filter((e) => { return e.parentId == provinceCode  })
+            }
+            function getArea(cityCode) {
+                return area.filter((e) => {return e.parentId == cityCode})
+            }
+            function appendOptionsDom(targetSelector, options) {
+                $.each(options, (i, v) => {
+                    var dom = "<option data-code='" + v.code + "' data-pId='" + v.parentId + "'>" + v.name + "</option>";
+                    $(targetSelector).append(dom);
+                })
+            }
+
+
+            //方法二
+            //初始化省
+            // $.each(province, function (i, v) {
+            //     var dom = "<option data-code='" + v.code + "' data-pId='" + v.parentId + "'>" + v.name + "</option>";
+            //     $("#province").append(dom);
+            // });
+
+            // cityChange();
+            //联动市
+            // function cityChange() {
+            //     $("#province").on("change", function (e) {
+            //         var code = $("#province option:selected").data("code");
+            //         var initCode = [];
+            //         $("#city").empty();
+            //         $.each(city, function (i, v) {
+            //             if (v.parentId == code) {
+            //                 initCode.push(v.code);
+            //                 var dom = "<option data-code='" + v.code + "' data-pId='" + v.parentId + "'>" + v.name + "</option>";
+            //                 $("#city").append(dom);
+            //             }
+            //         });
+            //         //默认区
+            //         $("#area").empty();
+            //         $.each(area, function (i, v) {
+            //             if (v.parentId == initCode[0]) {
+            //                 var dom = "<option data-code='" + v.code + "' data-pId='" + v.parentId + "'>" + v.name + "</option>";
+            //                 $("#area").append(dom);
+            //             }
+            //         });
+            //         areaChange();
+            //     })
+            // }
+
+
+            //联动区
+            // function areaChange() {
+            //     $("#city").on("change", function () {
+            //         var code = $("#city option:selected").data("code");
+            //         $("#area").empty();
+            //         $.each(area, function (i, v) {
+            //             if (v.parentId == code) {
+            //                 var dom = "<option data-code='" + v.code + "' data-pId='" + v.parentId + "'>" + v.name + "</option>";
+            //                 $("#area").append(dom);
+            //             }
+            //         });
+            //     })
+            // }
+
+        })
+    </script>
+</body>
+
+</html>
