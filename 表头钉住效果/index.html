@@ -103,15 +103,15 @@
         } else {
             $(".js-tab-th").addClass("scroll-fixed");
             console.log("_top:"+_top);
-            // console.log("tableScrollH:"+tableScrollH);
+            console.log("tableScrollH:"+tableScrollH);
             console.log('左侧表头：',tableScrollH - _top)
             if (_top > tableScrollH) {
-                $(".js-tab-th").eq(0).css({ top: tableScrollH - _top });
+                /**
+                 *  右侧表格在tableScrollH范围内可滚动，
+                 *  超过了左侧的就要跟着动了，所以用总的页面的距离减去tableScrollH，就是左侧滚动的距离，取负值就是左侧表头的top值
+                */
+                $(".js-tab-th").eq(0).css({ top: -(_top - tableScrollH) }); 
             } 
-            // else {
-                // $(".js-tab-th").eq(0).css({ top: 0 });
-            // }
-
         }
     }
 
