@@ -81,7 +81,7 @@
     </div>
 </body>
 <script>
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 20; i++) {
         var dom = "<li>标题" + (i + 1) + "</li>";
         $(".table-l ul").append(dom);
     };
@@ -92,7 +92,8 @@
     var thTop = $(".js-tab-th").offset().top;
     var tableH = $(".table-r ul").height();
     var t1H = $(".js-tab-th").eq(0).height();
-    var tableScrollH = thTop + tableH - t1H; //可滚动区域 减去右边导航的高度，右边导航到临界值之后要跟着上移
+    //右侧table滚动到此时作侧跟着滚动， 减去左边导航的高度，左边导航到临界值之后要跟着上移
+    var tableScrollH = thTop + tableH - t1H; 
 
     $(window).scroll(tableFixed);
     function tableFixed() {
@@ -102,12 +103,14 @@
         } else {
             $(".js-tab-th").addClass("scroll-fixed");
             console.log("_top:"+_top);
-            console.log("tableScrollH:"+tableScrollH);
+            // console.log("tableScrollH:"+tableScrollH);
+            console.log('左侧表头：',tableScrollH - _top)
             if (_top > tableScrollH) {
                 $(".js-tab-th").eq(0).css({ top: tableScrollH - _top });
-            } else {
-                $(".js-tab-th").eq(0).css({ top: 0 });
-            }
+            } 
+            // else {
+                // $(".js-tab-th").eq(0).css({ top: 0 });
+            // }
 
         }
     }
